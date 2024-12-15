@@ -4,7 +4,6 @@
 }
 
 .dashboard-main-wrapper {
-  background-color: aqua;
   display: flex;
   flex-direction: row;
   flex: 1;
@@ -15,9 +14,16 @@
   background-color: rgb(115, 255, 0);
   height: 100vh;
   width: 30vh;
+
 }
 
 .dashboard-right {
   flex: 1;
-  background-color: white;
+  padding: 30px 30px;
+}
+
+.dashboard-right-summary{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
