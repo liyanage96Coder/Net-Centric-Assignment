@@ -1,27 +1,95 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import SlideBar from '../component/SlideBar'
 import '../assets/css/addstudent.css'
 import { Form } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css"
 import { useNavigate } from 'react-router-dom'
+import { loadStudent } from '../common/Common'
+import { uploadFile } from "../routes/Routes"
+import { toast } from "react-toastify"
 
 function AddStudent() {
-  const [name, setName] = useState("");
-  const [birthDate, setBirthDate] = useState(null);
-  const [gpa, setGpa] = useState("");
-  const [gender, setGender] = useState("");
-  const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  const [studentId] = useState(decodeURI(window.location.href.split('/').at(-1)));
+  const [student, setStudent] = useState({
+    name: '',
+    dob: null,
+    gpa: '',
+    gender: '',
+    email: ''
+  });
 
+  useEffect(() => {
+    if (studentId !== 'add') {
+      loadStudent(studentId).then(data => {
+        setStudent(data);
+        setDob(new Date(data.dob));
+      }).catch(() => null);
+    }
+  }, [studentId]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setStudent((prevState) => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
 
   const handleDateChange = (date) => {
-    setBirthDate(date)
-  }
-
+    setStudent((prevState) => ({
+      ...prevState,
+      dob: date ? date.toISOString().split('T')[0] : '', 
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const data = new FormData();
+    data.append('name', student.name);
+    data.append('dob', student.dob);
+    data.append('gpa', student.gpa);
+    data.append('gender', student.gender);
+    data.append('email', student.email);
+    const endpoint = student ? ('/api/student/update/' + student.id) : '/api/student/';
+    uploadFile(data, endpoint).then(response => {
+      console.log(response.data.message);
+      if (response.status === 200) {
+        if (response.data.error) {
+          toast.error(response.data.message, {
+            position: "bottom-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        } else {
+          toast.success(response.data.message, {
+            position: "bottom-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          navigate('/adminStudent');
+        }
+      } else {
+        toast.error("An error occurred!", {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    });
   }
 
   return (
@@ -39,54 +107,72 @@ function AddStudent() {
           </div>
           <div>
             <form onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor='username'>Student Name:</label>
-                <input id='username' type='text' value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Enter student name"
-                ></input>
-                <label htmlFor='birthdate'>Student BirthDate:</label>
-                <DatePicker
-                  id='birthdate'
-                  selected={birthDate}
-                  onChange={handleDateChange}
-                  dateFormat={"yyyy-MM-dd"}
-                  minDate={new Date(1900, 0, 1)}
-                  maxDate={new Date()}
-                  showYearDropdown
-                  scrollableYearDropdown
-                  placeholderText='Select a date'
-                />
+              <div className='form-main-content'>
+                <div className='input-main-container'>
+                  <div className='input-sub-container'>
+                    <label htmlFor='username'>Student Name:</label>
+                    <input id='username' type='text'
+                      onChange={handleChange}
+                      placeholder="Enter student name"
+                      value={student ? student.name : ''}
+                    ></input>
+                  </div>
+                  <div className='input-sub-container'>
+                    <label htmlFor='birthdate'>Student BirthDate:</label>
+                    <DatePicker
+                      id='birthdate'
+                      selected={student ? new Date(student.dob) : null}
+                      onChange={handleDateChange}
+                      dateFormat={"yyyy-MM-dd"}
+                      minDate={new Date(1900, 0, 1)}
+                      maxDate={new Date()}
+                      showYearDropdown
+                      scrollableYearDropdown
+                      placeholderText='Select a date'
+                    />
+                  </div>
+                </div>
+                <div className='input-main-container'>
+                  <div className='input-sub-container'>
+                    <label htmlFor='gpa'>Student GPA:</label>
+                    <input id='gpa' type='number' step='0.01' value={student ? student.gpa : ''}
+                      onChange={handleChange}
+                      placeholder="Enter GPA (e.g., 3.5)"
+                    />
+                  </div>
+                  <div className='input-sub-container'>
+                    <label htmlFor="gender">Gender:</label>
+                    <select
+                      id="gender"
+                      value={student?.gender || ''}
+                      onChange={handleChange}
+                    >
+                      <option value="">Select Gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                  </div>
+                </div>
+                <div className='input-main-container'>
+                  <div className='input-sub-container'>
+                    <label htmlFor="email">Email:</label>
+                    <input
+                      id="email"
+                      type="email"
+                      value={student ? student.email : ''}
+                      onChange={handleChange}
+                      placeholder="Enter student email"
+                    />
+                  </div>
+                  <div></div>
+                </div>
               </div>
-              <div>
-                <label htmlFor='gpa'>Student GPA:</label>
-                <input id='gpa' type='number' step='0.01' value={gpa}
-                  onChange={(e) => setGpa(e.target.value)}
-                  placeholder="Enter GPA (e.g., 3.5)"
-                />
-                <label htmlFor="gender">Gender:</label>
-                <select
-                  id="gender"
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                >
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
+              <div className='button-main-container'>
+                <button type="submit">{student ? "Edit Student" : "Add Student"}</button>
+                <button onClick={() => navigate('/adminStudent')}
+                  style={{ backgroundColor: '#f54a4a' }}
+                >Cancel</button>
               </div>
-              <div>
-                <label htmlFor="email">Email:</label>
-                <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter student email"
-                />
-              </div>
-              <button type="submit">Add Student</button>
-              <button onClick={() => navigate('/adminStudent')}>Cancel</button>
             </form>
           </div>
         </div>

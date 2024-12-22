@@ -1,5 +1,5 @@
-import {toast} from "react-tostify"
-import {getRequest} from "../routes/Routes"
+import { toast } from "react-toastify";
+import { getRequest } from "../routes/Routes"
 
 
 export const loadStudents = async () => {
@@ -40,4 +40,15 @@ export const loadStudent = async (id) => {
         }
     });
     return student;
+};
+
+export const handleDeleteCheckBox = (id, deleteArray) => {
+    if (deleteArray.includes(id)) {
+        deleteArray = deleteArray.filter(function (element) {
+            return element !== id
+        });
+    } else {
+        deleteArray.push(id);
+    }
+    return deleteArray;
 };
