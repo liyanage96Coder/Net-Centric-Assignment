@@ -20,6 +20,8 @@ function AddStudent() {
     email: ''
   });
 
+  console.log(student);
+
   useEffect(() => {
     if (studentId !== 'add') {
       loadStudent(studentId).then(data => {
@@ -40,21 +42,20 @@ function AddStudent() {
   const handleDateChange = (date) => {
     setStudent((prevState) => ({
       ...prevState,
-      dob: date ? date.toISOString().split('T')[0] : '', 
+      dob: date ? date.toISOString().split('T')[0] : '',
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.append('name', student.name);
-    data.append('dob', student.dob);
-    data.append('gpa', student.gpa);
-    data.append('gender', student.gender);
-    data.append('email', student.email);
-    const endpoint = student ? ('/api/student/update/' + student.id) : '/api/student/';
+    data.append('name', e.target.name.value);
+    data.append('gender', e.target.gender.value);
+    data.append('dob', e.target.dob.value);
+    data.append('gpa', e.target.gpa.value);
+    data.append('email', e.target.email.value);
+    const endpoint = student.id ? ('/api/student/update/' + student.id) : '/api/student';
     uploadFile(data, endpoint).then(response => {
-      console.log(response.data.message);
       if (response.status === 200) {
         if (response.data.error) {
           toast.error(response.data.message, {
@@ -89,8 +90,11 @@ function AddStudent() {
           progress: undefined,
         });
       }
+
     });
   }
+
+
 
   return (
     <div className='addstudent-main-container'>
@@ -111,16 +115,17 @@ function AddStudent() {
                 <div className='input-main-container'>
                   <div className='input-sub-container'>
                     <label htmlFor='username'>Student Name:</label>
-                    <input id='username' type='text'
+                    <input id='name' name='name' type='text'
                       onChange={handleChange}
                       placeholder="Enter student name"
-                      value={student ? student.name : ''}
+                      value={ student?.name || ""}
                     ></input>
                   </div>
                   <div className='input-sub-container'>
                     <label htmlFor='birthdate'>Student BirthDate:</label>
                     <DatePicker
                       id='birthdate'
+                      name='dob'
                       selected={student ? new Date(student.dob) : null}
                       onChange={handleDateChange}
                       dateFormat={"yyyy-MM-dd"}
@@ -135,7 +140,7 @@ function AddStudent() {
                 <div className='input-main-container'>
                   <div className='input-sub-container'>
                     <label htmlFor='gpa'>Student GPA:</label>
-                    <input id='gpa' type='number' step='0.01' value={student ? student.gpa : ''}
+                    <input id='gpa' name='gpa' type='number' step='0.01' value={ student?.gpa || ''}
                       onChange={handleChange}
                       placeholder="Enter GPA (e.g., 3.5)"
                     />
@@ -144,6 +149,7 @@ function AddStudent() {
                     <label htmlFor="gender">Gender:</label>
                     <select
                       id="gender"
+                      name='gender'
                       value={student?.gender || ''}
                       onChange={handleChange}
                     >
@@ -158,6 +164,7 @@ function AddStudent() {
                     <label htmlFor="email">Email:</label>
                     <input
                       id="email"
+                      name="email"
                       type="email"
                       value={student ? student.email : ''}
                       onChange={handleChange}
@@ -168,7 +175,7 @@ function AddStudent() {
                 </div>
               </div>
               <div className='button-main-container'>
-                <button type="submit">{student ? "Edit Student" : "Add Student"}</button>
+                <button type="submit">{student.id? "Edit Student" : "Add Student"}</button>
                 <button onClick={() => navigate('/adminStudent')}
                   style={{ backgroundColor: '#f54a4a' }}
                 >Cancel</button>
