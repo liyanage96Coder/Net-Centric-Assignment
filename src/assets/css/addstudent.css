@@ -70,3 +70,70 @@
 .addstudent-table td button:hover {
   background-color: #0056b3;
 }
+
+.form-main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 10px;
+  margin-bottom: 50px;
+}
+.input-main-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.input-main-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  width: 100%;
+}
+.input-main-container input {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 50%;
+}
+
+.input-sub-container input {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 50%;
+}
+
+.input-main-container select {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.button-main-container {
+  display: flex;
+  justify-content: left;
+  gap: 20px;
+  padding: 10px;
+}
+
+.button-main-container button {
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  width: 100px;
+  height: 40px;
+}

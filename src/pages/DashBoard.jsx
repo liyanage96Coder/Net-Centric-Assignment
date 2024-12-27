@@ -1,8 +1,38 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SlideBar from '../component/SlideBar'
 import '../assets/css/dashboard.css'
+import { loadStudents } from '../common/Common'
 
 function DashBoard() {
+
+    const [students, setStudents] = useState([]);
+
+      useEffect(() => {
+          loadStudents()
+              .then(data => {
+                  setStudents(data);
+              })
+              .catch(err => {
+                  console.log(err);
+              });
+      }, []);
+    const tableBody = () => {
+        let body = [];
+        students.forEach((data, index) => {
+            body.push(
+                <tr key={"Student" + index}>
+                    <td>{data.id}</td>
+                    <td>{data.name}</td>
+                    <td>{data.dob}</td>
+                    <td>{data.gpa}</td>
+                    <td>{data.gender}</td>
+                    <td>{data.email}</td>
+                </tr>
+            );
+        });
+        return body;
+    };
+
     return (
         <div className='dashboard-main-container'>
             <div className='dashboard-main-wrapper'>
@@ -25,23 +55,17 @@ function DashBoard() {
                         <table className='adminstudent-table'>
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Name</th>
                                     <th>DOB</th>
                                     <th>GPA</th>
                                     <th>Gender</th>
                                     <th>Email</th>
-                                   
+
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>John Doe</td>
-                                    <td>1996/05/16</td>
-                                    <td>2.56</td>
-                                    <td>Male</td>
-                                    <td>test@gmail.com</td>
-
-                                </tr>
+                                {tableBody()}
                             </tbody>
                         </table>
                     </div>
