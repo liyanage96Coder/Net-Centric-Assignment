@@ -52,7 +52,7 @@ function AdminStudent() {
 
     const deleteFunction = () => {
         selectedRows.forEach((row, index) => {
-            deleteRequest('/api/student/' + row).then(response => {
+            deleteRequest('http://127.0.0.1:8000/api/student/' + row).then(response => {
                 console.log(response);
                 if (response.status === 200) {
                     if (response.data.error) {

@@ -54,7 +54,7 @@ function AddStudent() {
     data.append('dob', e.target.dob.value);
     data.append('gpa', e.target.gpa.value);
     data.append('email', e.target.email.value);
-    const endpoint = student.id ? ('/api/student/update/' + student.id) : '/api/student';
+    const endpoint = student.id ? ('http://127.0.0.1:8000/api/student/update/' + student.id) : 'http://127.0.0.1:8000/api/student';
     uploadFile(data, endpoint).then(response => {
       if (response.status === 200) {
         if (response.data.error) {
