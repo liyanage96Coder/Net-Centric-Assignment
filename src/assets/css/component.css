@@ -13,6 +13,9 @@
   cursor: pointer;
   padding: 15px 10px;
   width: 25vh;
+  font-size: 1.2rem;
+  box-sizing: border-box;
+  font-weight: 700;
 }
 
 .sliderbar-main-warper .sub_topic:hover {
@@ -21,4 +24,37 @@
   width: 25vh;
   box-sizing: border-box;
   border-radius: 5px;
+}
+
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.popup-content label {
+  font-size: 1.2rem;
+}
+
+.popup-content input {
+  padding: 4px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 6px;
+}
+
+.popup-content-btn {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.popup-content-btn button {
+  padding: 8px 12px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.2rem;
 }
