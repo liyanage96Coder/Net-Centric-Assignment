@@ -8,13 +8,13 @@
   flex-direction: row;
   flex: 1;
   width: 100%;
+ 
 }
 
 .dashboard-left {
   background-color: rgb(115, 255, 0);
   height: 100vh;
   width: 30vh;
-
 }
 
 .dashboard-right {
@@ -22,7 +22,7 @@
   padding: 30px 30px;
 }
 
-.dashboard-right-summary{
+.dashboard-right-summary {
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -20,8 +20,6 @@ function AddStudent() {
     email: ''
   });
 
-  console.log(student);
-
   useEffect(() => {
     if (studentId !== 'add') {
       loadStudent(studentId).then(data => {
@@ -114,15 +112,19 @@ function AddStudent() {
               <div className='form-main-content'>
                 <div className='input-main-container'>
                   <div className='input-sub-container'>
-                    <label htmlFor='username'>Student Name:</label>
-                    <input id='name' name='name' type='text'
-                      onChange={handleChange}
-                      placeholder="Enter student name"
-                      value={ student?.name || ""}
-                    ></input>
+                    <div className='input-label'>
+                      <label htmlFor='username'>Student Name :- </label>
+                    </div>
+                    <div>
+                      <input id='name' name='name' type='text'
+                        onChange={handleChange}
+                        placeholder="Enter student name"
+                        value={student?.name || ""}
+                      ></input>
+                    </div>
                   </div>
                   <div className='input-sub-container'>
-                    <label htmlFor='birthdate'>Student BirthDate:</label>
+                    <label htmlFor='birthdate'>Student BirthDate :- </label>
                     <DatePicker
                       id='birthdate'
                       name='dob'
@@ -134,48 +136,61 @@ function AddStudent() {
                       showYearDropdown
                       scrollableYearDropdown
                       placeholderText='Select a date'
+
                     />
                   </div>
                 </div>
                 <div className='input-main-container'>
                   <div className='input-sub-container'>
-                    <label htmlFor='gpa'>Student GPA:</label>
-                    <input id='gpa' name='gpa' type='number' step='0.01' value={ student?.gpa || ''}
-                      onChange={handleChange}
-                      placeholder="Enter GPA (e.g., 3.5)"
-                    />
+                    <div className='input-label'>
+                      <label htmlFor='gpa'>Student GPA :- </label>
+                    </div>
+                    <div>
+                      <input id='gpa' name='gpa' type='number' step='0.01' value={student?.gpa || ''}
+                        onChange={handleChange}
+                        placeholder="Enter GPA (e.g., 3.5)"
+                      />
+                    </div>
                   </div>
                   <div className='input-sub-container'>
-                    <label htmlFor="gender">Gender:</label>
-                    <select
-                      id="gender"
-                      name='gender'
-                      value={student?.gender || ''}
-                      onChange={handleChange}
-                    >
-                      <option value="">Select Gender</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                    </select>
+                    <div >
+                      <label htmlFor="gender">Gender :-</label>
+                    </div>
+                    <div>
+                      <select
+                        id="gender"
+                        name='gender'
+                        value={student?.gender || ''}
+                        onChange={handleChange}
+                      >
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
                 <div className='input-main-container'>
                   <div className='input-sub-container'>
-                    <label htmlFor="email">Email:</label>
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={student ? student.email : ''}
-                      onChange={handleChange}
-                      placeholder="Enter student email"
-                    />
+                    <div className='input-label'>
+                      <label htmlFor="email">Email :-</label>
+                    </div>
+                    <div>
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={student ? student.email : ''}
+                        onChange={handleChange}
+                        placeholder="Enter student email"
+                      />
+                    </div>
                   </div>
                   <div></div>
                 </div>
               </div>
               <div className='button-main-container'>
-                <button type="submit">{student.id? "Edit Student" : "Add Student"}</button>
+                <button type="submit">{student.id ? "Edit Student" : "Add Student"}</button>
                 <button onClick={() => navigate('/adminStudent')}
                   style={{ backgroundColor: '#f54a4a' }}
                 >Cancel</button>
