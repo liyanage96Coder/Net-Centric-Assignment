@@ -1,12 +1,13 @@
 .sliderbar-main-warper {
-  background-color: aqua;
+  background-color: #2e3a59;
   flex: 1;
-  height: 100vh;
+  height: 95vh;
   width: 30vh;
   padding: 50px 10px 5px 10px;
   gap: 30px;
   display: flex;
   flex-direction: column;
+  color: #f3f4f6;
 }
 
 .sliderbar-main-warper .sub_topic {
@@ -19,7 +20,7 @@
 }
 
 .sliderbar-main-warper .sub_topic:hover {
-  background-color: rgb(244, 8, 8);
+  background-color: #3B82F6;
   padding: 15px 10px;
   width: 25vh;
   box-sizing: border-box;
@@ -38,6 +39,7 @@
 
 .popup-content input {
   padding: 4px;
+  margin: 5px 0;
   font-size: 1.2rem;
   border: none;
   border-radius: 6px;
@@ -58,3 +60,4 @@
   border-radius: 4px;
   font-size: 1.2rem;
 }
+

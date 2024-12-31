@@ -7,6 +7,7 @@ import { deleteRequest } from "../routes/Routes"
 import { toast } from "react-toastify"
 import PopUp from '../component/popUp'
 
+
 function AdminStudent() {
     const navigate = useNavigate();
     const [students, setStudents] = useState([]);
