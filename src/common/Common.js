@@ -4,7 +4,7 @@ import { getRequest } from "../routes/Routes"
 
 export const loadStudents = async () => {
     let students = [];
-    await getRequest('http://127.0.0.1:8000/api/student').then(response => {
+    await getRequest('api/student').then(response => {
         if (response.status === 200) {
             students = response.data.students;
         } else {
@@ -24,7 +24,7 @@ export const loadStudents = async () => {
 
 export const loadStudent = async (id) => {
     let student = null;
-    await getRequest('http://127.0.0.1:8000/api/student/' + id).then(response => {
+    await getRequest('/api/student/' + id).then(response => {
         if (response.status === 200) {
             student = response.data.student;
         } else {
